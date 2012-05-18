@@ -131,7 +131,8 @@ getNewAid = (d) ->
           newAid[row.program_name][row.country_name][date] = val
 
 formatMoney = (val) ->
-  val = val.toString()
+	###
+	val = val.toString()
   len = val.length
   num_commas = Math.ceil(len/3)- 1
   newVal = val.substr(-3, 3)
@@ -140,3 +141,5 @@ formatMoney = (val) ->
       pos = -(1+i)*3
       newVal = val.substr(pos, 3) + "," + newVal
   return newVal
+	###
+	return val.toString()
