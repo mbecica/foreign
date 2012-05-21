@@ -1,12 +1,15 @@
 import json
 
 countryTotals = {}
+countryStream = []
 deptTotals = {}
 yearCD = {}
 
 jdata = open('aid.json')
 data = json.load(jdata)
 jdata.close()
+
+'''
 
 'Dept, country, year'
 for dept, d in data.iteritems():
@@ -24,7 +27,6 @@ for dept, d in data.iteritems():
 				yearCD[dept][country][year] = val 
 	
 
-'''
 'Dept, year, country'
 for dept, d in data.iteritems():
 	if dept not in yearCD:
@@ -99,8 +101,24 @@ for dept, d in data.iteritems():
 				countryTotals[country][date] = val
 			else:
 				countryTotals[country][date] += val
-
 '''
-f = open('dept_country_year.json', 'w')
-f.write('[' + json.dumps(yearCD, separators = (',', ':')) + '];')
+
+'Country Totals for stream'
+
+stdata = open('countryTotals.json')
+sdata = json.load(stdata)
+stdata.close()
+
+for i in sdata:
+	for country, cd in i.iteritems():
+		temp = {
+			"name": country,
+			"values":[]
+		}
+		for date, val in cd.iteritems():
+			temp["values"].append({"x": int(date)-1946, "y": val})
+		countryStream.append(temp)
+
+f = open('countryStream.json', 'w')
+f.write(json.dumps(countryStream, separators = (',', ':')))
 f.close()
